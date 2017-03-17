@@ -3,9 +3,9 @@
 namespace Fluoresce\DoctrineUndeletable\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
-use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Fluoresce\DoctrineUndeletable\Exception\UndeletableObjectException;
 
 /**
@@ -46,14 +46,14 @@ class UndeletableSubscriber implements EventSubscriber
     /**
      * If it’s a Undeletable object, throw an exception
      *
-     * @param EventArgs $args
+     * @param OnFlushEventArgs $args
      *
      * @return void
      * @throws UndeletableObjectException
      */
-    public function onFlush(EventArgs $args)
+    public function onFlush(OnFlushEventArgs $args)
     {
-        $uow = $ea->getObjectManager()->getUnitOfWork();
+        $uow = $args->getEntityManager()->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityDeletions() as $object) {
             if ($this->classIsUndeletable(get_class($object))) {
