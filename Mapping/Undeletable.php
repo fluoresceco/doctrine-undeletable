@@ -12,6 +12,6 @@ use Doctrine\Common\Annotations\Annotation;
  * @Annotation
  * @Target("CLASS")
  */
-final class Undeleteable extends Annotation
+final class Undeletable extends Annotation
 {
 }
