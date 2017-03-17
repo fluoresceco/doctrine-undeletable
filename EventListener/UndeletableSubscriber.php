@@ -53,11 +53,9 @@ class UndeletableSubscriber implements EventSubscriber
      */
     public function onFlush(EventArgs $args)
     {
-        $ea = $this->getEventAdapter($args);
-        $om = $ea->getObjectManager();
-        $uow = $om->getUnitOfWork();
+        $uow = $ea->getObjectManager()->getUnitOfWork();
 
-        foreach ($ea->getScheduledObjectDeletions($uow) as $object) {
+        foreach ($uow->getScheduledEntityDeletions() as $object) {
             if ($this->classIsUndeletable(get_class($object))) {
                 throw new UndeletableObjectException();
             }
