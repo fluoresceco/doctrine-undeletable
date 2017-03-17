@@ -1,0 +1,23 @@
+{
+    "name": "fluoresce/doctrine-undeletable",
+    "description": "Doctrine annotation to make entities undeletable.",
+    "keywords": ["doctrine", "undeletable", "undeleteable", "delete", "behaviour"],
+    "homepage": "https://github.com/fluoresceco/doctrine-undeletable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jaik Dean",
+            "email": "jaik@fluoresce.co"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "doctrine/common": "~2.4"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Fluoresce\\DoctrineUndeletable\\": ""
+        }
+    }
+}
