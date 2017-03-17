@@ -56,3 +56,16 @@ class Transaction
     …
 }
 ```
+
+When you attempt to delete a `Transaction`, an exception will be thrown.
+
+```php
+$transaction = $entityManager->find('Transaction', 123);
+$entityManager->remove($transaction);
+
+try {
+    $entityManager->flush();
+} catch (Fluoresce\DoctrineUndeletable\Exception\UndeletableObjectException $e) {
+    // $transaction was not deleted from the database
+}
+```
