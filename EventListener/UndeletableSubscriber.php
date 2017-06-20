@@ -71,7 +71,7 @@ class UndeletableSubscriber implements EventSubscriber
      */
     protected function classIsUndeletable($class)
     {
-        static $cache;
+        static $cache = array();
 
         if (!array_key_exists($class, $cache)) {
             $refl = new \ReflectionClass($class);
