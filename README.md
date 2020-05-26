@@ -1,5 +1,4 @@
-Doctrine Undeletable
-====================
+# Doctrine Undeletable
 
 This library provides an `Undeletable` annotation for Doctrine entities.
 
@@ -23,7 +22,7 @@ Composer documentation.
 
 ### Configuration
 
-#### Symfony 2/3
+#### Symfony
 
 Register the Doctrine event subscriber as a service. In `services.yml` this
 would look as follows.
@@ -39,33 +38,33 @@ services:
 
 ### Basic Usage
 
-This example shows a `Transaction` ORM entity which should never be deleted.
+This example shows a `Book` ORM entity which should never be deleted.
 
 ```php
 <?php
 
 use Doctrine\ORM\Mapping as ORM;
-use Fluoresce\DoctrineUndeletable\Mapping as Fluoresce;
+use Fluoresce\DoctrineUndeletable\Mapping\Undeletable;
 
 /**
  * @ORM\Entity
- * @Fluoresce\Undeletable
+ * @Undeletable
  */
-class Transaction
+class Book
 {
     …
 }
 ```
 
-When you attempt to delete a `Transaction`, an exception will be thrown.
+When you attempt to delete a `Book`, an exception will be thrown.
 
 ```php
-$transaction = $entityManager->find('Transaction', 123);
-$entityManager->remove($transaction);
+$book = $entityManager->find('Book', 123);
+$entityManager->remove($book);
 
 try {
     $entityManager->flush();
 } catch (Fluoresce\DoctrineUndeletable\Exception\UndeletableObjectException $e) {
-    // $transaction was not deleted from the database
+    // $book was not deleted from the database
 }
 ```
