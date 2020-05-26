@@ -7,9 +7,7 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="EventListener" />
-        <directory name="Exception" />
-        <directory name="Mapping" />
+        <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>

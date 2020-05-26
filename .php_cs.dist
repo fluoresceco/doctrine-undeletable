@@ -1,7 +1,7 @@
 <?php
 
 $finder = Symfony\Component\Finder\Finder::create()
-    ->in(['EventListener', 'Exception', 'Mapping'])
+    ->in(['src'])
     ->name(['*.php'])
 ;
 
