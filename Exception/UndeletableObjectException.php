@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fluoresce\DoctrineUndeletable\Exception;
 
-/**
- * @author Jaik Dean <jaik@fluoresce.co>
- */
-class UndeletableObjectException extends \Exception
+final class UndeletableObjectException extends \Exception
 {
 }

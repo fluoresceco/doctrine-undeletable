@@ -1,62 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fluoresce\DoctrineUndeletable\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Fluoresce\DoctrineUndeletable\Exception\UndeletableObjectException;
+use Fluoresce\DoctrineUndeletable\Mapping\Undeletable;
 
-/**
- * @author Jaik Dean <jaik@fluoresce.co>
- */
-class UndeletableSubscriber implements EventSubscriber
+final class UndeletableSubscriber implements EventSubscriber
 {
-    /**
-     * @var string
-     */
-    const ANNOTATION_CLASS = 'Fluoresce\\DoctrineUndeletable\\Mapping\\Undeletable';
+    const ANNOTATION_CLASS = Undeletable::class;
 
-    /**
-     * Annotation reader
-     *
-     * @var Reader
-     */
-    protected $reader;
+    private Reader $reader;
 
-    /**
-     * @param Reader $reader
-     */
     public function __construct(Reader $reader)
     {
         $this->reader = $reader;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
-        return array(
+        return [
             'onFlush',
-        );
+        ];
     }
 
     /**
-     * If it’s a Undeletable object, throw an exception
-     *
-     * @param OnFlushEventArgs $args
-     *
-     * @return void
-     * @throws UndeletableObjectException
+     * @throws UndeletableObjectException if attempting to flush an Undeletable object
      */
-    public function onFlush(OnFlushEventArgs $args)
+    public function onFlush(OnFlushEventArgs $args): void
     {
         $uow = $args->getEntityManager()->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityDeletions() as $object) {
-            if ($this->classIsUndeletable(get_class($object))) {
+            if ($this->classIsUndeletable(\get_class($object))) {
                 throw new UndeletableObjectException();
             }
         }
@@ -65,19 +48,18 @@ class UndeletableSubscriber implements EventSubscriber
     /**
      * Check whether a class is flagged as undeletable
      *
-     * @param string $class
-     *
-     * @return bool
+     * @param class-string $class
      */
-    protected function classIsUndeletable($class)
+    private function classIsUndeletable(string $class): bool
     {
-        static $cache = array();
+        /** @var array<class-string,bool> */
+        static $cache = [];
 
         if (!array_key_exists($class, $cache)) {
             $refl = new \ReflectionClass($class);
-            $cache['class'] = (null !== $this->reader->getClassAnnotation($refl, self::ANNOTATION_CLASS));
+            $cache[$class] = (null !== $this->reader->getClassAnnotation($refl, self::ANNOTATION_CLASS));
         }
 
-        return $cache['class'];
+        return $cache[$class];
     }
 }
