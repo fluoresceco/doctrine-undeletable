@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.4",
         "doctrine/orm": "~2.4"
     },
     "minimum-stability": "stable",
@@ -19,5 +19,8 @@
         "psr-4": {
             "Fluoresce\\DoctrineUndeletable\\": ""
         }
+    },
+    "require-dev": {
+        "vimeo/psalm": "^3.11"
     }
 }
