@@ -7,7 +7,7 @@ namespace Fluoresce\DoctrineUndeletable\Mapping;
 use Doctrine\Common\Annotations\Annotation;
 
 /**
- * Entity annotation for undeletable behaviour
+ * Entity annotation for undeletable behaviour.
  *
  * @Annotation
  * @Target("CLASS")

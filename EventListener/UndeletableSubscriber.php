@@ -46,7 +46,7 @@ final class UndeletableSubscriber implements EventSubscriber
     }
 
     /**
-     * Check whether a class is flagged as undeletable
+     * Check whether a class is flagged as undeletable.
      *
      * @param class-string $class
      */
@@ -55,7 +55,7 @@ final class UndeletableSubscriber implements EventSubscriber
         /** @var array<class-string,bool> */
         static $cache = [];
 
-        if (!array_key_exists($class, $cache)) {
+        if (!\array_key_exists($class, $cache)) {
             $refl = new \ReflectionClass($class);
             $cache[$class] = (null !== $this->reader->getClassAnnotation($refl, self::ANNOTATION_CLASS));
         }
